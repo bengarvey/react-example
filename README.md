@@ -20,7 +20,7 @@ npm run dev
 open http://localhost:8080
 ```
 
-- [Semiotic] : https://emeeks.github.io/semiotic/
-- [React]: http://facebook.github.io/react/
-- [webpack]: http://webpack.github.io/
-- [babeljs]: https://babeljs.io/
+[Semiotic] : https://emeeks.github.io/semiotic/
+[React]: http://facebook.github.io/react/
+[webpack]: http://webpack.github.io/
+[babeljs]: https://babeljs.io/
