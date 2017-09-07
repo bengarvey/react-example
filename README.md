@@ -3,7 +3,7 @@
 Semiotic example app that gets you up and running with Semiotic, React, Webpack, etc.
 Forked from https://github.com/mzabriskie/react-example
 
-![Line Chart](https://github.com/bengarvey/react-example/img/screen-shot-semiotic.png)
+![Line Chart](img/screen-shot-semiotic.png)
 
 Requirements:
 - git
