@@ -13,8 +13,8 @@ Requirements:
 To run the app locally:
 
 ```bash
-git clone https://github.com/bengarvey/react-example.git
-cd react-example
+git clone https://github.com/bengarvey/semiotic-example.git
+cd semiotic-example
 npm run setup
 npm run dev
 open http://localhost:8080
