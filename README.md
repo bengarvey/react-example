@@ -1,6 +1,7 @@
-# react-example
+# semiotic-example
 
-React example app that demonstrates using [React] with [webpack], and [babeljs], as well as project structure.
+Semiotic example app that gets you up and running with Semiotic, React, Webpack, etc.
+Forked from https://github.com/mzabriskie/react-example
 
 Requirements:
 - git
@@ -10,13 +11,14 @@ Requirements:
 To run the app locally:
 
 ```bash
-git clone https://github.com/mzabriskie/react-example.git
+git clone https://github.com/bengarvey/react-example.git
 cd react-example
 npm run setup
 npm run dev
 open http://localhost:8080
 ```
 
+[Semiotic] : https://emeeks.github.io/semiotic/
 [React]: http://facebook.github.io/react/
 [webpack]: http://webpack.github.io/
 [babeljs]: https://babeljs.io/
