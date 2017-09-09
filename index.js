@@ -310,9 +310,11 @@ ReactDOM.render(
   <XYFrame
     size={[1400,400]}
     lines={display}
+    yExtent={[135.5]}
     lineDataAccessor={d => d.data}
     xAccessor={d => new Date(d.date)}
     yAccessor={d => d.lbs}
+    hoverAnnotation={true}
     lineStyle={() => ({ stroke: "#00a2ce", strokeWidth: "1px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
