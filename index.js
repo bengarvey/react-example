@@ -1264,6 +1264,7 @@ ReactDOM.render(
   size={[500,200]}
   lines={display}
   yExtent={[0,58000]}
+  defined={d => showData(d)}
   lineDataAccessor={d => d.data}
   xAccessor={d => d.Year}
   yAccessor={d => d['Alcohol related deaths']}
@@ -1282,11 +1283,16 @@ function calcDeaths(alc, total) {
   return alc != null ? total - alc : null;
 }
 
+function showData(d) {
+  return d['Alcohol related deaths'] != null;
+}
+
 ReactDOM.render(
 <XYFrame
   size={[500,200]}
   lines={display}
   yExtent={[0,58000]}
+  defined={d => showData(d)}
   lineDataAccessor={d => d.data}
   xAccessor={d => d.Year}
   yAccessor={d => calcDeaths(d['Alcohol related deaths'], d.Deaths)}
