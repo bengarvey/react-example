@@ -1179,29 +1179,63 @@ var display = {
   data: auto
 };
 
+var modified = {
+  deaths: [],
+  alcohol: [],
+  nonAlcohol: []
+};
+
+
+function calcNonAlcDeaths(deaths, alc) {
+  if (alc == null) {
+    return null;
+  }
+  else {
+    return deaths - alc;
+  }
+}
+
+auto.forEach( function(d) {
+  modified.deaths.push(
+    {y: d.Deaths, x: d.Year, type:'death'});
+  modified.alcohol.push(
+    {y: d['Alcohol related deaths'], x: d.Year, type:'alcohol'});
+  modified.nonAlcohol.push(
+    {y: calcNonAlcDeaths(d.Deaths, d['Alcohol related deaths']), x: d.Year, type:'non-alcohol'});
+});
+console.log(modified);
+
 var sharedProps = {
   size: [800,200]
 };
 
+var modDisplay = [
+  {data: modified.deaths, color: '#256676'},
+  {data: modified.nonAlcohol, color: '#76AA25'},
+  {data: modified.alcohol, color: '#BB5425'}
+];
+
 ReactDOM.render(
   <XYFrame
     size={[500,200]}
-    lines={display}
+    lines={modDisplay}
+    defined={d => d.y !== null}
     yExtent={[0, 55000]}
-    lineDataAccessor={d => d.data}
-    xAccessor={d => d.Year}
-    yAccessor={d => d.Deaths}
+    lineDataAccessor="data"
+    xAccessor="x"
+    yAccessor="y"
     hoverAnnotation={true}
     lineRenderMode={"sketchy"}
-    lineStyle={() => ({ stroke: "#256676", strokeWidth: "2px" })}
+    lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
-      { orient: 'bottom', tickFormat: d => d, ticks: 10 }
+      { orient: 'bottom', ticks: 10 }
     ]}
+
   />,
   document.getElementById('deaths')
 );
-
+/*
 ReactDOM.render(
   <XYFrame
     size={[500,200]}
@@ -1362,4 +1396,4 @@ ReactDOM.render(
   />,
   document.getElementById('deaths-per-person')
 );
-
+*/
