@@ -1182,7 +1182,9 @@ var display = {
 var modified = {
   deaths: [],
   alcohol: [],
-  nonAlcohol: []
+  nonAlcohol: [],
+  pop: [],
+  miles: []
 };
 
 
@@ -1202,6 +1204,10 @@ auto.forEach( function(d) {
     {y: d['Alcohol related deaths'], x: d.Year, type:'alcohol'});
   modified.nonAlcohol.push(
     {y: calcNonAlcDeaths(d.Deaths, d['Alcohol related deaths']), x: d.Year, type:'non-alcohol'});
+  modified.pop.push(
+    {y: d.Population, x: d.Year, type: 'pop'});
+  modified.miles.push(
+    {y: d['Vehicle miles travelled (billions)'], x: d.Year, type: 'miles'});
 });
 console.log(modified);
 
@@ -1209,7 +1215,15 @@ var sharedProps = {
   size: [800,200]
 };
 
-var modDisplay = [
+var popDisplay = [
+  {data: modified.deaths, color: '#256676'},
+  {data: modified.pop, color: '#76AA25'}
+];
+var milesDisplay = [
+  {data: modified.deaths, color: '#256676'},
+  {data: modified.miles, color: '#76AA25'}
+];
+var alcDisplay = [
   {data: modified.deaths, color: '#256676'},
   {data: modified.nonAlcohol, color: '#76AA25'},
   {data: modified.alcohol, color: '#BB5425'}
@@ -1218,7 +1232,47 @@ var modDisplay = [
 ReactDOM.render(
   <XYFrame
     size={[500,200]}
-    lines={modDisplay}
+    lines={popDisplay}
+    defined={d => d.y !== null}
+    lineDataAccessor="data"
+    xAccessor="x"
+    yAccessor="y"
+    hoverAnnotation={true}
+    lineRenderMode={"sketchy"}
+    lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
+    customLineType={{ type: "dividedLine"}}
+    axes={[
+      { orient: 'bottom', ticks: 10 }
+    ]}
+
+  />,
+  document.getElementById('population')
+);
+
+ReactDOM.render(
+  <XYFrame
+    size={[500,200]}
+    lines={milesDisplay}
+    defined={d => d.y !== null}
+    lineDataAccessor="data"
+    xAccessor="x"
+    yAccessor="y"
+    hoverAnnotation={true}
+    lineRenderMode={"sketchy"}
+    lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
+    customLineType={{ type: "dividedLine"}}
+    axes={[
+      { orient: 'bottom', ticks: 10 }
+    ]}
+
+  />,
+  document.getElementById('miles')
+);
+
+ReactDOM.render(
+  <XYFrame
+    size={[500,200]}
+    lines={alcDisplay}
     defined={d => d.y !== null}
     yExtent={[0, 55000]}
     lineDataAccessor="data"
@@ -1233,167 +1287,7 @@ ReactDOM.render(
     ]}
 
   />,
-  document.getElementById('deaths')
-);
-/*
-ReactDOM.render(
-  <XYFrame
-    size={[500,200]}
-    lines={display}
-    yExtent={[0]}
-    lineDataAccessor={d => d.data}
-    xAccessor={d => d.Year}
-    yAccessor={d => d.Population}
-    hoverAnnotation={true}
-    lineRenderMode={"sketchy"}
-    lineStyle={() => ({ stroke: "#72e5ef", strokeWidth: "1px" })}
-    customLineType={{ type: "dividedLine"}}
-    axes={[
-      { orient: 'bottom', tickFormat: d => "", ticks: 10 }
-    ]}
-  />,
-  document.getElementById('population')
-);
-
-ReactDOM.render(
-  <XYFrame
-    size={[500,200]}
-    lines={display}
-    yExtent={[0, 58000]}
-    lineDataAccessor={d => d.data}
-    xAccessor={d => d.Year}
-    yAccessor={d => d.Deaths}
-    hoverAnnotation={true}
-    lineRenderMode={"sketchy"}
-    lineStyle={() => ({ stroke: "#256676", strokeWidth: "2px" })}
-    customLineType={{ type: "dividedLine"}}
-    axes={[
-      { orient: 'bottom', tickFormat: d => d, ticks: 10 }
-    ]}
-  />,
-  document.getElementById('deaths2')
-);
-
-ReactDOM.render(
-  <XYFrame
-    size={[500,200]}
-    lines={display}
-    yExtent={[0,58000]}
-    lineDataAccessor={d => d.data}
-    xAccessor={d => d.Year}
-    yAccessor={d => d.Deaths}
-    hoverAnnotation={true}
-    lineRenderMode={"sketchy"}
-    lineStyle={() => ({ stroke: "#256676", strokeWidth: "2px" })}
-    customLineType={{ type: "dividedLine"}}
-    axes={[
-      { orient: 'bottom', tickFormat: d => "", ticks: 10 }
-    ]}
-  />,
-  document.getElementById('deaths3')
-);
-
-ReactDOM.render(
-<XYFrame
-  size={[500,200]}
-  lines={display}
-  yExtent={[0,58000]}
-  defined={d => showData(d)}
-  lineDataAccessor={d => d.data}
-  xAccessor={d => d.Year}
-  yAccessor={d => d['Alcohol related deaths']}
-  hoverAnnotation={true}
-  lineRenderMode={"sketchy"}
-  lineStyle={() => ({ stroke: "#996676", strokeWidth: "2px" })}
-  customLineType={{ type: "dividedLine"}}
-  axes={[
-    { orient: 'bottom', tickFormat: d => "", ticks: 10 }
-  ]}
-/>,
-document.getElementById('alcohol-deaths')
-);
-
-function calcDeaths(alc, total) {
-  return alc != null ? total - alc : null;
-}
-
-function showData(d) {
-  return d['Alcohol related deaths'] != null;
-}
-
-ReactDOM.render(
-<XYFrame
-  size={[500,200]}
-  lines={display}
-  yExtent={[0,58000]}
-  defined={d => showData(d)}
-  lineDataAccessor={d => d.data}
-  xAccessor={d => d.Year}
-  yAccessor={d => calcDeaths(d['Alcohol related deaths'], d.Deaths)}
-  hoverAnnotation={true}
-  lineRenderMode={"sketchy"}
-  lineStyle={() => ({ stroke: "#669976", strokeWidth: "2px" })}
-  customLineType={{ type: "dividedLine"}}
-  axes={[
-    { orient: 'bottom', tickFormat: d => "", ticks: 10 }
-  ]}
-/>,
-document.getElementById('non-alcohol-deaths')
+  document.getElementById('alcohol')
 );
 
 
-ReactDOM.render(
-  <XYFrame
-    size={[500,200]}
-    lines={display}
-    yExtent={[0]}
-    lineDataAccessor={d => d.data}
-    xAccessor={d => d.Year}
-    yAccessor={d => d['Vehicle miles travelled (billions)']}
-    hoverAnnotation={true}
-    lineRenderMode={"sketchy"}
-    lineStyle={() => ({ stroke: "#99ffaa", strokeWidth: "2px" })}
-    customLineType={{ type: "dividedLine"}}
-    axes={[
-      { orient: 'bottom', tickFormat: d => "", ticks: 10}
-    ]}
-  />,
-  document.getElementById('miles-driven')
-);
-
-ReactDOM.render(
-  <XYFrame
-    size={[500,200]}
-    lines={display}
-    lineDataAccessor={d => d.data}
-    xAccessor={d => d.Year}
-    yAccessor={d => d['Fatalities per 100 million VMT']}
-    hoverAnnotation={true}
-    lineRenderMode={"sketchy"}
-    lineStyle={() => ({ stroke: "#eeeeee", strokeWidth: "2px" })}
-    customLineType={{ type: "dividedLine"}}
-    axes={[
-      { orient: 'bottom', tickFormat: d => "", ticks: 10}
-    ]}
-  />,
-  document.getElementById('deaths-per-100-million-miles-driven')
-);
-
-ReactDOM.render(
-  <XYFrame
-    size={[500,200]}
-    lines={display}
-    lineDataAccessor={d => d.data}
-    xAccessor={d => d.Year}
-    yAccessor={d => d.Deaths / d.Population}
-    hoverAnnotation={true}
-    lineRenderMode={"sketchy"}
-    lineStyle={() => ({ stroke: "#eeeeee", strokeWidth: "2px" })}
-    customLineType={{ type: "dividedLine"}}
-    axes={[
-      { orient: 'bottom', tickFormat: d => "", ticks: 10}
-    ]}
-  />,
-  document.getElementById('deaths-per-person')
-);
-*/
