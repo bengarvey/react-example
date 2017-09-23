@@ -1215,19 +1215,71 @@ var sharedProps = {
   size: [800,200]
 };
 
+var colors = {
+  deaths: '#256676',
+  pop: '#CCFFCC',
+  miles: '#CCCCFF',
+  alc: '#BB5425',
+  nonAlc: '#76AA25'
+}
+
+var deathDisplay = [
+  {data: modified.deaths, color: colors.deaths}
+];
+
 var popDisplay = [
-  {data: modified.deaths, color: '#256676'},
-  {data: modified.pop, color: '#76AA25'}
+  {data: modified.pop, color: colors.pop}
 ];
+
 var milesDisplay = [
-  {data: modified.deaths, color: '#256676'},
-  {data: modified.miles, color: '#76AA25'}
+  {data: modified.miles, color: colors.miles}
 ];
+
 var alcDisplay = [
-  {data: modified.deaths, color: '#256676'},
-  {data: modified.nonAlcohol, color: '#76AA25'},
-  {data: modified.alcohol, color: '#BB5425'}
+  {data: modified.deaths, color: colors.deaths},
+  {data: modified.nonAlcohol, color: colors.nonAlc},
+  {data: modified.alcohol, color: colors.alc}
 ];
+
+ReactDOM.render(
+  <XYFrame
+    size={[500,200]}
+    lines={deathDisplay}
+    defined={d => d.y !== null}
+    lineDataAccessor="data"
+    xAccessor="x"
+    yAccessor="y"
+    hoverAnnotation={true}
+    lineRenderMode={"sketchy"}
+    lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
+    customLineType={{ type: "dividedLine"}}
+    axes={[
+      { orient: 'bottom', ticks: 10 }
+    ]}
+
+  />,
+  document.getElementById('deathPopulation')
+);
+
+ReactDOM.render(
+  <XYFrame
+    size={[500,200]}
+    lines={deathDisplay}
+    defined={d => d.y !== null}
+    lineDataAccessor="data"
+    xAccessor="x"
+    yAccessor="y"
+    hoverAnnotation={true}
+    lineRenderMode={"sketchy"}
+    lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
+    customLineType={{ type: "dividedLine"}}
+    axes={[
+      { orient: 'bottom', ticks: 10 }
+    ]}
+
+  />,
+  document.getElementById('deathMiles')
+);
 
 ReactDOM.render(
   <XYFrame
@@ -1242,7 +1294,7 @@ ReactDOM.render(
     lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
-      { orient: 'bottom', ticks: 10 }
+      { orient: 'bottom', ticks: 10, tickFormat: d => '' }
     ]}
 
   />,
@@ -1262,7 +1314,7 @@ ReactDOM.render(
     lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
-      { orient: 'bottom', ticks: 10 }
+      { orient: 'bottom', ticks: 10, tickFormat: d => '', stroke: '#FFFFFF' }
     ]}
 
   />,

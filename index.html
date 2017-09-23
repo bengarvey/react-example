@@ -4,16 +4,25 @@
   <title>Semiotic Example</title>
   <style>
     .tick-line {
-      opacity: 0.3;
+      opacity: 0.4;
     }
+
+    #population .tick-line {
+      opacity: 0;
+    }
+
+    #miles .tick-line {
+      opacity: 0;
+    }
+
     .container {
       position: absolute;
     }
-    #population {
+    #population, #deathPopulation {
       top: 10px;
       left: 200px;
     }
-    #miles {
+    #miles, #deathMiles {
       top: 200px;
       left: 200px;
     }
@@ -24,8 +33,10 @@
   </style>
 </head>
 <body>
+  <div class="container" id="deathPopulation"></div>
   <div class="container" id="population"></div>
   <div class="container" id="miles"></div>
+  <div class="container" id="deathMiles"></div>
   <div class="container" id="alcohol"></div>
   <script src="/build/bundle.js"></script>
 </body>
