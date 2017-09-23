@@ -299,12 +299,36 @@ var lbs = [
   {date:'2017-09-05',lbs:165},
   {date:'2017-09-06',lbs:164.4},
   {date:'2017-09-07',lbs:163.2},
-  {date:'2017-09-08',lbs:163}
+  {date:'2017-09-08',lbs:162.4},
+  {date:'2017-09-11',lbs:163.4},
+  {date:'2017-09-12',lbs:162.0},
+  {date:'2017-09-13',lbs:161.0},
+  {date:'2017-09-14',lbs:162.4},
+  {date:'2017-09-15',lbs:162.2},
+  {date:'2017-09-16',lbs:162.0},
+  {date:'2017-09-17',lbs:163.0},
+  {date:'2017-09-18',lbs:162.4},
+  {date:'2017-09-19',lbs:163.4},
+  {date:'2017-09-20',lbs:160.2},
+  {date:'2017-09-21',lbs:161.0},
+  {date:'2017-09-22',lbs:159.8},
+  {date:'2017-09-23',lbs:158.6}
 ];
 
-var display = {
-  data: lbs
-};
+var floating = [];
+var window = 7;
+for(var i=window; i<lbs.length; i++) {
+  var value = 0;
+  for(var j=window-1; j>=0; j--) {
+    value += lbs[i-j].lbs;
+  }
+  floating.push({date: lbs[i].date, lbs: value/window});
+}
+
+var display = [
+  {data: lbs, color: '#DDDDFF'},
+  {data: floating, color: '#00a2ce'}
+];
 
 ReactDOM.render(
   <XYFrame
@@ -315,7 +339,7 @@ ReactDOM.render(
     xAccessor={d => new Date(d.date)}
     yAccessor={d => d.lbs}
     hoverAnnotation={true}
-    lineStyle={() => ({ stroke: "#00a2ce", strokeWidth: "1px" })}
+    lineStyle={(d) => ({ stroke: d.color, strokeWidth: "1px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
       { orient: 'left', tickFormat: d => d },
