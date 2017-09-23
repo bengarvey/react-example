@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { XYFrame } from 'semiotic';
+import { curveBasis } from 'd3-shape';
 
 var lbs = [
   {date:'2014-03-24',lbs:166.5},
@@ -340,10 +341,11 @@ ReactDOM.render(
     yAccessor={d => d.lbs}
     hoverAnnotation={true}
     lineStyle={(d) => ({ stroke: d.color, strokeWidth: "1px" })}
+    lineType={{ type: 'line', interpolator: curveBasis }}
     customLineType={{ type: "dividedLine"}}
     axes={[
       { orient: 'left', tickFormat: d => d },
-      { orient: 'bottom', tickFormat: d => new Date(d).toDateString(), ticks: 8 }
+      { orient: 'bottom', tickFormat: d => new Date(d).toDateString(), ticks: 6 }
     ]}
   />,
   document.getElementById('container')
