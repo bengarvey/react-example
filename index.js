@@ -314,7 +314,8 @@ var lbs = [
   {date:'2017-09-21',lbs:161.0},
   {date:'2017-09-22',lbs:159.8},
   {date:'2017-09-23',lbs:158.6},
-  {date:'2017-09-24',lbs:159.2}
+  {date:'2017-09-24',lbs:159.2},
+  {date:'2017-09-25',lbs:159.8}
 ];
 
 var floating = [];
@@ -328,8 +329,8 @@ for(var i=window; i<lbs.length; i++) {
 }
 
 var display = [
-  {data: lbs, color: '#DDDDFF'},
-  {data: floating, color: '#00a2ce'}
+  {data: lbs, color: '#DDDDFF', strokeWidth: "1px"},
+  {data: floating, color: '#00a2ce', strokeWidth: "2px"}
 ];
 
 ReactDOM.render(
@@ -337,11 +338,12 @@ ReactDOM.render(
     size={[1400,400]}
     lines={display}
     yExtent={[135.5]}
+    margin={{top: 5, bottom: 25, left: 55, right: 5}}
     lineDataAccessor={d => d.data}
     xAccessor={d => new Date(d.date)}
     yAccessor={d => d.lbs}
     hoverAnnotation={true}
-    lineStyle={(d) => ({ stroke: d.color, strokeWidth: "1px" })}
+    lineStyle={(d) => ({ stroke: d.color, strokeWidth: d.strokeWidth })}
     lineType={{ type: 'line', interpolator: curveBasis }}
     customLineType={{ type: "dividedLine"}}
     axes={[
