@@ -1181,6 +1181,7 @@ var display = {
 
 var modified = {
   deaths: [],
+  deathsBeforeAlcData: [],
   alcohol: [],
   nonAlcohol: [],
   pop: [],
@@ -1197,9 +1198,15 @@ function calcNonAlcDeaths(deaths, alc) {
   }
 }
 
+function hideModernDeaths(deaths, alc, year) {
+  return alc === null ? deaths : null;
+}
+
 auto.forEach( function(d) {
   modified.deaths.push(
     {y: d.Deaths, x: d.Year, type:'death'});
+  modified.deathsBeforeAlcData.push(
+    {y: hideModernDeaths(d.Deaths, d['Alcohol related deaths'], d.Year), x: d.Year, type:'death'});
   modified.alcohol.push(
     {y: d['Alcohol related deaths'], x: d.Year, type:'alcohol'});
   modified.nonAlcohol.push(
@@ -1220,11 +1227,11 @@ var colors = {
   pop: '#CCFFCC',
   miles: '#CCCCFF',
   alc: '#BB5425',
-  nonAlc: '#76AA25'
+  nonAlc: '#FF9465'
 }
 
 var deathDisplay = [
-  {data: modified.deaths, color: colors.deaths}
+  {data: modified.deaths, color: colors.deaths, renderMode: "normal"}
 ];
 
 var popDisplay = [
@@ -1236,9 +1243,8 @@ var milesDisplay = [
 ];
 
 var alcDisplay = [
-  {data: modified.deaths, color: colors.deaths},
-  {data: modified.nonAlcohol, color: colors.nonAlc},
-  {data: modified.alcohol, color: colors.alc}
+  {data: modified.nonAlcohol, color: colors.nonAlc, fillOpacity: 0.5},
+  {data: modified.alcohol, color: colors.alc, fillOpacity: 0.5}
 ];
 
 ReactDOM.render(
@@ -1250,8 +1256,8 @@ ReactDOM.render(
     xAccessor="x"
     yAccessor="y"
     hoverAnnotation={true}
-    lineRenderMode={"sketchy"}
-    lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
+    lineRenderMode={d => d.renderMode}
+    lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
       { orient: 'bottom', ticks: 10 }
@@ -1270,8 +1276,8 @@ ReactDOM.render(
     xAccessor="x"
     yAccessor="y"
     hoverAnnotation={true}
-    lineRenderMode={"sketchy"}
-    lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
+    lineRenderMode={"normal"}
+    lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
       { orient: 'bottom', ticks: 10 }
@@ -1290,8 +1296,8 @@ ReactDOM.render(
     xAccessor="x"
     yAccessor="y"
     hoverAnnotation={true}
-    lineRenderMode={"sketchy"}
-    lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
+    lineRenderMode={"normal"}
+    lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
       { orient: 'bottom', ticks: 10, tickFormat: d => '' }
@@ -1310,8 +1316,8 @@ ReactDOM.render(
     xAccessor="x"
     yAccessor="y"
     hoverAnnotation={true}
-    lineRenderMode={"sketchy"}
-    lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
+    lineRenderMode={"normal"}
+    lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
       { orient: 'bottom', ticks: 10, tickFormat: d => '', stroke: '#FFFFFF' }
@@ -1324,18 +1330,42 @@ ReactDOM.render(
 ReactDOM.render(
   <XYFrame
     size={[500,200]}
+    lines={deathDisplay}
+    defined={d => d.y !== null}
+    yExtent={[0, 55000]}
+    lineDataAccessor="data"
+    lineType={{type:"line"}}
+    xAccessor="x"
+    yAccessor="y"
+    hoverAnnotation={true}
+    lineRenderMode={"normal"}
+    lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
+    customLineType={{ type: "dividedLine"}}
+    axes={[
+      { orient: 'bottom', ticks: 10 }
+    ]}
+
+  />,
+  document.getElementById('deathAlcohol')
+);
+
+
+ReactDOM.render(
+  <XYFrame
+    size={[500,200]}
     lines={alcDisplay}
     defined={d => d.y !== null}
     yExtent={[0, 55000]}
     lineDataAccessor="data"
+    lineType={{type:"stackedarea"}}
     xAccessor="x"
     yAccessor="y"
     hoverAnnotation={true}
-    lineRenderMode={"sketchy"}
-    lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
+    lineRenderMode={"normal"}
+    lineStyle={d => ({fill: d.color, fillOpacity: d.fillOpacity, strokeWidth: "1px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
-      { orient: 'bottom', ticks: 10 }
+      { orient: 'bottom', ticks: 10, tickFormat: d => '' }
     ]}
 
   />,
