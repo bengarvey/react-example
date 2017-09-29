@@ -1223,11 +1223,11 @@ var sharedProps = {
 };
 
 var colors = {
-  deaths: '#256676',
-  pop: '#CCFFCC',
-  miles: '#CCCCFF',
-  alc: '#BB5425',
-  nonAlc: '#FF9465'
+  deaths: '#2D728F',
+  pop: '#6FBC86',
+  miles: '#F5EE9E',
+  alc: '#AB3428',
+  nonAlc: '#F49E4C'
 }
 
 var deathDisplay = [
@@ -1243,8 +1243,8 @@ var milesDisplay = [
 ];
 
 var alcDisplay = [
-  {data: modified.nonAlcohol, color: colors.nonAlc, fillOpacity: 0.5},
-  {data: modified.alcohol, color: colors.alc, fillOpacity: 0.5}
+  {data: modified.nonAlcohol, color: colors.nonAlc, fillOpacity: 0.9},
+  {data: modified.alcohol, color: colors.alc, fillOpacity: 0.9}
 ];
 
 ReactDOM.render(
