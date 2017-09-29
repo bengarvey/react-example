@@ -318,7 +318,8 @@ var lbs = [
   {date:'2017-09-25',lbs:159.8},
   {date:'2017-09-26',lbs:159.4},
   {date:'2017-09-27',lbs:157.8},
-  {date:'2017-09-27',lbs:158.2}
+  {date:'2017-09-28',lbs:158.2},
+  {date:'2017-09-29',lbs:157.4}
 ];
 
 var floating = [];
@@ -340,7 +341,7 @@ ReactDOM.render(
   <XYFrame
     size={[1400,400]}
     lines={display}
-    yExtent={[135.5]}
+    yExtent={[145]}
     margin={{top: 5, bottom: 25, left: 55, right: 5}}
     lineDataAccessor={d => d.data}
     xAccessor={d => new Date(d.date)}
