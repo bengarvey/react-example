@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { XYFrame } from 'semiotic';
+import { curveBasis } from 'd3-shape';
 
 var auto = [
    {
@@ -1223,11 +1224,11 @@ var sharedProps = {
 };
 
 var colors = {
-  deaths: '#2D728F',
-  pop: '#6FBC86',
-  miles: '#F5EE9E',
-  alc: '#AB3428',
-  nonAlc: '#F49E4C'
+  deaths: '#393e41',
+  pop: '#da4167',
+  miles: '#15b097',
+  alc: '#fcde9c',
+  nonAlc: '#f4d35e'
 }
 
 var deathDisplay = [
@@ -1257,6 +1258,7 @@ ReactDOM.render(
     yAccessor="y"
     hoverAnnotation={true}
     lineRenderMode={d => d.renderMode}
+    lineType={{type:"line", interpolator: curveBasis}}
     lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
@@ -1275,6 +1277,7 @@ ReactDOM.render(
     lineDataAccessor="data"
     xAccessor="x"
     yAccessor="y"
+    lineType={{type:"line", interpolator: curveBasis}}
     hoverAnnotation={true}
     lineRenderMode={"normal"}
     lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
@@ -1297,6 +1300,8 @@ ReactDOM.render(
     yAccessor="y"
     hoverAnnotation={true}
     lineRenderMode={"normal"}
+    lineType={{type:"line", interpolator: curveBasis}}
+
     lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
@@ -1316,6 +1321,7 @@ ReactDOM.render(
     xAccessor="x"
     yAccessor="y"
     hoverAnnotation={true}
+    lineType={{type:"line", interpolator: curveBasis}}
     lineRenderMode={"normal"}
     lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
     customLineType={{ type: "dividedLine"}}
@@ -1334,10 +1340,12 @@ ReactDOM.render(
     defined={d => d.y !== null}
     yExtent={[0, 55000]}
     lineDataAccessor="data"
-    lineType={{type:"line"}}
+    lineType={{type:"line", interpolator: curveBasis}}
     xAccessor="x"
     yAccessor="y"
     hoverAnnotation={true}
+
+    lineType={{type:"line", interpolator: curveBasis}}
     lineRenderMode={"normal"}
     lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
     customLineType={{ type: "dividedLine"}}
@@ -1357,7 +1365,7 @@ ReactDOM.render(
     defined={d => d.y !== null}
     yExtent={[0, 55000]}
     lineDataAccessor="data"
-    lineType={{type:"stackedarea"}}
+    lineType={{type:"stackedarea", interpolator: curveBasis}}
     xAccessor="x"
     yAccessor="y"
     hoverAnnotation={true}
