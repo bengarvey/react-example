@@ -1217,11 +1217,6 @@ auto.forEach( function(d) {
   modified.miles.push(
     {y: d['Vehicle miles travelled (billions)'], x: d.Year, type: 'miles'});
 });
-console.log(modified);
-
-var sharedProps = {
-  size: [800,200]
-};
 
 var colors = {
   deaths: '#393e41',
@@ -1248,17 +1243,21 @@ var alcDisplay = [
   {data: modified.alcohol, color: colors.alc, fillOpacity: 0.9}
 ];
 
+var sharedProps = {
+  size: [500,200],
+  xAccessor: "x",
+  yAccessor: "y",
+  lineDataAccessor: "data",
+  hoverAnnotation: true
+};
+
 ReactDOM.render(
   <XYFrame
-    size={[500,200]}
+    { ...sharedProps }
     lines={deathDisplay}
     defined={d => d.y !== null}
     lineDataAccessor="data"
-    xAccessor="x"
-    yAccessor="y"
-    hoverAnnotation={true}
     lineRenderMode={d => d.renderMode}
-    lineType={{type:"line", interpolator: curveBasis}}
     lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
@@ -1271,14 +1270,13 @@ ReactDOM.render(
 
 ReactDOM.render(
   <XYFrame
-    size={[500,200]}
+    { ...sharedProps }
     lines={deathDisplay}
     defined={d => d.y !== null}
     lineDataAccessor="data"
     xAccessor="x"
     yAccessor="y"
     lineType={{type:"line", interpolator: curveBasis}}
-    hoverAnnotation={true}
     lineRenderMode={"normal"}
     lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
     customLineType={{ type: "dividedLine"}}
@@ -1292,7 +1290,7 @@ ReactDOM.render(
 
 ReactDOM.render(
   <XYFrame
-    size={[500,200]}
+    { ...sharedProps }
     lines={popDisplay}
     defined={d => d.y !== null}
     lineDataAccessor="data"
@@ -1314,7 +1312,7 @@ ReactDOM.render(
 
 ReactDOM.render(
   <XYFrame
-    size={[500,200]}
+    { ...sharedProps }
     lines={milesDisplay}
     defined={d => d.y !== null}
     lineDataAccessor="data"
@@ -1335,7 +1333,7 @@ ReactDOM.render(
 
 ReactDOM.render(
   <XYFrame
-    size={[500,200]}
+    { ...sharedProps }
     lines={deathDisplay}
     defined={d => d.y !== null}
     yExtent={[0, 55000]}
@@ -1344,7 +1342,6 @@ ReactDOM.render(
     xAccessor="x"
     yAccessor="y"
     hoverAnnotation={true}
-
     lineType={{type:"line", interpolator: curveBasis}}
     lineRenderMode={"normal"}
     lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
@@ -1360,7 +1357,7 @@ ReactDOM.render(
 
 ReactDOM.render(
   <XYFrame
-    size={[500,200]}
+    { ...sharedProps }
     lines={alcDisplay}
     defined={d => d.y !== null}
     yExtent={[0, 55000]}
