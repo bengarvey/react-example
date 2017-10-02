@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { XYFrame } from 'semiotic';
 import { curveBasis } from 'd3-shape';
+import { annotationCalloutRect } from 'd3-svg-annotation';
 
 var auto = [
    {
@@ -1223,7 +1224,8 @@ var colors = {
   pop: '#da4167',
   miles: '#15b097',
   alc: '#fcde9c',
-  nonAlc: '#f4d35e'
+  nonAlc: '#f4d35e',
+  annotation: "#009ddc"
 }
 
 var deathDisplay = [
@@ -1243,12 +1245,36 @@ var alcDisplay = [
   {data: modified.alcohol, color: colors.alc, fillOpacity: 0.9}
 ];
 
+const popAnnotations = [
+  { type: "x", x: 1968,
+    note: { label: "Seat belts required", align: "middle", wrap: 50},
+    color: colors.annotation, dy: -10, dx: 0, connector: { end: "none" } },
+  { type: "x", x: 1984,
+    note: { label: "NY seat belt law", align: "middle", wrap: 100},
+    color: colors.annotation, dy: -5, dx: 0, connector: { end: "none" } },
+  { type: "x", x: 1994,
+    note: { label: "Seat belt laws: 90% of states", align: "middle", wrap: 500},
+    color: colors.annotation, dy: -20, dx: 0, connector: { end: "none" } }
+];
+
+const mileAnnotations = [
+  { type: annotationCalloutRect,
+    data: {x:2008,y:1500},
+    y: 10, x: 460,
+    dx: -150,
+    dy: 150,
+    note: { label: "Great recession", align: "left", wrap: 100},
+    subject: { width: 10, height:165 }
+  }
+];
+
 var sharedProps = {
   size: [500,200],
   xAccessor: "x",
   yAccessor: "y",
   lineDataAccessor: "data",
-  hoverAnnotation: true
+  hoverAnnotation: true,
+  margin:{ left: 10, bottom: 30, right: 10, top: 10 }
 };
 
 ReactDOM.render(
@@ -1263,7 +1289,7 @@ ReactDOM.render(
     axes={[
       { orient: 'bottom', ticks: 10 }
     ]}
-
+    margin={{ left: 10, bottom: 30, right: 10, top: 40 }}
   />,
   document.getElementById('deathPopulation')
 );
@@ -1283,7 +1309,6 @@ ReactDOM.render(
     axes={[
       { orient: 'bottom', ticks: 10 }
     ]}
-
   />,
   document.getElementById('deathMiles')
 );
@@ -1305,7 +1330,8 @@ ReactDOM.render(
     axes={[
       { orient: 'bottom', ticks: 10, tickFormat: d => '' }
     ]}
-
+    margin={{ left: 10, bottom: 30, right: 10, top: 40 }}
+    annotations={popAnnotations}
   />,
   document.getElementById('population')
 );
@@ -1323,6 +1349,7 @@ ReactDOM.render(
     lineRenderMode={"normal"}
     lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
     customLineType={{ type: "dividedLine"}}
+    annotations={mileAnnotations}
     axes={[
       { orient: 'bottom', ticks: 10, tickFormat: d => '', stroke: '#FFFFFF' }
     ]}
