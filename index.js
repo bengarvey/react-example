@@ -1206,18 +1206,22 @@ function hideModernDeaths(deaths, alc, year) {
 
 auto.forEach( function(d) {
   modified.deaths.push(
-    {y: d.Deaths, x: d.Year, type:'death'});
+    {y: d.Deaths, x: yearToDate(d.Year), type:'death'});
   modified.deathsBeforeAlcData.push(
-    {y: hideModernDeaths(d.Deaths, d['Alcohol related deaths'], d.Year), x: d.Year, type:'death'});
+    {y: hideModernDeaths(d.Deaths, d['Alcohol related deaths'], d.Year), x: yearToDate(d.Year), type:'death'});
   modified.alcohol.push(
-    {y: d['Alcohol related deaths'], x: d.Year, type:'alcohol'});
+    {y: d['Alcohol related deaths'], x: yearToDate(d.Year), type:'alcohol'});
   modified.nonAlcohol.push(
-    {y: calcNonAlcDeaths(d.Deaths, d['Alcohol related deaths']), x: d.Year, type:'non-alcohol'});
+    {y: calcNonAlcDeaths(d.Deaths, d['Alcohol related deaths']), x: yearToDate(d.Year), type:'non-alcohol'});
   modified.pop.push(
-    {y: d.Population, x: d.Year, type: 'pop'});
+    {y: d.Population, x: yearToDate(d.Year), type: 'pop'});
   modified.miles.push(
-    {y: d['Vehicle miles travelled (billions)'], x: d.Year, type: 'miles'});
+    {y: d['Vehicle miles travelled (billions)'], x: yearToDate(d.Year), type: 'miles'});
 });
+
+function yearToDate(year) {
+  return new Date(`${year}-01-01 00:00:00`);
+}
 
 var colors = {
   deaths: '#393e41',
@@ -1246,25 +1250,44 @@ var alcDisplay = [
 ];
 
 const popAnnotations = [
-  { type: "x", x: 1968,
+  { type: "x", x: yearToDate(1968),
     note: { label: "Seat belts required", align: "middle", wrap: 50},
     color: colors.annotation, dy: -10, dx: 0, connector: { end: "none" } },
-  { type: "x", x: 1984,
+  { type: "x", x: yearToDate(1984),
     note: { label: "NY seat belt law", align: "middle", wrap: 100},
     color: colors.annotation, dy: -5, dx: 0, connector: { end: "none" } },
-  { type: "x", x: 1994,
+  { type: "x", x: yearToDate(1994),
     note: { label: "Seat belt laws: 90% of states", align: "middle", wrap: 500},
-    color: colors.annotation, dy: -20, dx: 0, connector: { end: "none" } }
+    color: colors.annotation, dy: -20, dx: 0, connector: { end: "none" } },
+  { type: "x", x: yearToDate(1998),
+    note: { label: "Airbags required", align: "middle", wrap: 500},
+    color: colors.annotation, dy: -5, dx: 35, connector: { end: "none" } }
 ];
 
-const mileAnnotations = [
-  { type: annotationCalloutRect,
+var sharedMileAnnotationProps = {
+  type: annotationCalloutRect,
+  dx: -150,
+  dy: 150,
+  subject: { width: 10, height:165 }
+}
+
+var mileAnnotations = [
+  {...sharedMileAnnotationProps,
     data: {x:2008,y:1500},
     y: 10, x: 460,
-    dx: -150,
-    dy: 150,
     note: { label: "Great recession", align: "left", wrap: 100},
-    subject: { width: 10, height:165 }
+  },
+  {...sharedMileAnnotationProps,
+    data: {x:2000,y:1500},
+    y: 10, x: 430,
+    subject: { width:5, height:165 },
+    disable: ["connector"]
+  },
+  { ...sharedMileAnnotationProps,
+    data: {x:1991,y:1500},
+    y: 10, x: 400,
+    subject: { width:5, height:165 },
+    disable: ["connector"]
   }
 ];
 
@@ -1284,10 +1307,10 @@ ReactDOM.render(
     defined={d => d.y !== null}
     lineDataAccessor="data"
     lineRenderMode={d => d.renderMode}
-    lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
+    lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
-      { orient: 'bottom', ticks: 10 }
+      { orient: 'bottom', ticks: 10, tickFormat: d => new Date(d).getFullYear() }
     ]}
     margin={{ left: 10, bottom: 30, right: 10, top: 40 }}
   />,
@@ -1304,10 +1327,10 @@ ReactDOM.render(
     yAccessor="y"
     lineType={{type:"line", interpolator: curveBasis}}
     lineRenderMode={"normal"}
-    lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
+    lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
-      { orient: 'bottom', ticks: 10 }
+      { orient: 'bottom', ticks: 10, tickFormat: d => new Date(d).getFullYear()}
     ]}
   />,
   document.getElementById('deathMiles')
@@ -1325,7 +1348,7 @@ ReactDOM.render(
     lineRenderMode={"normal"}
     lineType={{type:"line", interpolator: curveBasis}}
 
-    lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
+    lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
       { orient: 'bottom', ticks: 10, tickFormat: d => '' }
@@ -1347,7 +1370,7 @@ ReactDOM.render(
     hoverAnnotation={true}
     lineType={{type:"line", interpolator: curveBasis}}
     lineRenderMode={"normal"}
-    lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
+    lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
     customLineType={{ type: "dividedLine"}}
     annotations={mileAnnotations}
     axes={[
@@ -1371,10 +1394,10 @@ ReactDOM.render(
     hoverAnnotation={true}
     lineType={{type:"line", interpolator: curveBasis}}
     lineRenderMode={"normal"}
-    lineStyle={d => ({stroke: d.color, strokeWidth: "1px" })}
+    lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
-      { orient: 'bottom', ticks: 10 }
+      { orient: 'bottom', ticks: 10, tickFormat: d => new Date(d).getFullYear() }
     ]}
 
   />,
@@ -1394,7 +1417,7 @@ ReactDOM.render(
     yAccessor="y"
     hoverAnnotation={true}
     lineRenderMode={"normal"}
-    lineStyle={d => ({fill: d.color, fillOpacity: d.fillOpacity, strokeWidth: "1px" })}
+    lineStyle={d => ({fill: d.color, fillOpacity: d.fillOpacity, strokeWidth: "2px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
       { orient: 'bottom', ticks: 10, tickFormat: d => '' }
