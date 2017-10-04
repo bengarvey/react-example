@@ -1261,7 +1261,13 @@ const popAnnotations = [
     color: colors.annotation, dy: -20, dx: 0, connector: { end: "none" } },
   { type: "x", x: yearToDate(1998),
     note: { label: "Airbags required", align: "middle", wrap: 500},
-    color: colors.annotation, dy: -5, dx: 35, connector: { end: "none" } }
+    color: colors.annotation, dy: -5, dx: 35, connector: { end: "none" } },
+  { type: "x", x: new Date("1945-08-15"),
+    note: { label: "WW2 Ends", align: "middle", wrap: 500},
+    color: colors.annotation, dy: -20, dx: 0, connector: { end: "none" } },
+  { type: "x", x: new Date("1941-12-07"),
+    note: { label: "WW2 Begins", align: "right", wrap: 500},
+    color: colors.annotation, dy: -5, dx: 0, connector: { end: "none" } }
 ];
 
 var sharedMileAnnotationProps = {
@@ -1306,6 +1312,7 @@ ReactDOM.render(
     lines={deathDisplay}
     defined={d => d.y !== null}
     lineDataAccessor="data"
+    lineType={{type:"line", interpolator: curveBasis}}
     lineRenderMode={d => d.renderMode}
     lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
     customLineType={{ type: "dividedLine"}}
