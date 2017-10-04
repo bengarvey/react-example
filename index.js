@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { XYFrame } from 'semiotic';
 import { curveBasis } from 'd3-shape';
 import { annotationCalloutRect } from 'd3-svg-annotation';
+import { annotationLabel } from 'd3-svg-annotation';
 
 var auto = [
    {
@@ -1250,7 +1251,7 @@ var alcDisplay = [
 ];
 
 const popAnnotations = [
-  { type: "x", x: yearToDate(1968),
+  { type: 'x', x: yearToDate(1968),
     note: { label: "Seat belts required", align: "middle", wrap: 50},
     color: colors.annotation, dy: -10, dx: 0, connector: { end: "none" } },
   { type: "x", x: yearToDate(1984),
