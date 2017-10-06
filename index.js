@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { XYFrame } from 'semiotic';
 import { curveBasis } from 'd3-shape';
-import { annotationCalloutRect } from 'd3-svg-annotation';
-import { annotationLabel } from 'd3-svg-annotation';
+import { scaleTime } from 'd3-scale';
+//import { AnnotationCalloutRect } from 'd3-svg-annotation';
+//import { AnnotationLabel } from 'd3-svg-annotation';
 
 var auto = [
    {
@@ -1268,33 +1269,173 @@ const popAnnotations = [
     color: colors.annotation, dy: -20, dx: 0, connector: { end: "none" } },
   { type: "x", x: new Date("1941-12-07"),
     note: { label: "WW2 Begins", align: "right", wrap: 500},
-    color: colors.annotation, dy: -5, dx: 0, connector: { end: "none" } }
+    color: colors.annotation, dy: -5, dx: 0, disable:["connector"] }
 ];
 
 var sharedMileAnnotationProps = {
-  type: annotationCalloutRect,
-  dx: -150,
+  dx: -50,
   dy: 150,
-  subject: { width: 10, height:165 }
+  color: '#aaa',
+  className: 'recession'
 }
 
 var mileAnnotations = [
-  {...sharedMileAnnotationProps,
-    data: {x:2008,y:1500},
-    y: 10, x: 460,
-    note: { label: "Great recession", align: "left", wrap: 100},
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("2007-12-01 00:00:00") }, { x: new Date("2009-06-01 00:00:00") }],
+    label: "Great Recession"
   },
-  {...sharedMileAnnotationProps,
-    data: {x:2000,y:1500},
-    y: 10, x: 430,
-    subject: { width:5, height:165 },
-    disable: ["connector"]
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1929-04-01 00:00:00") }, { x: new Date("1933-03-01 00:00:00") }],
+    label: "Great Depression",
+    dy: 20,
+    dx: -30
   },
-  { ...sharedMileAnnotationProps,
-    data: {x:1991,y:1500},
-    y: 10, x: 400,
-    subject: { width:5, height:165 },
-    disable: ["connector"]
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("2001-03-01 00:00:00") }, { x: new Date("2001-11-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1990-07-01 00:00:00") }, { x: new Date("1991-03-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1981-07-01 00:00:00") }, { x: new Date("1982-11-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1980-01-01 00:00:00") }, { x: new Date("1980-07-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1973-11-01 00:00:00") }, { x: new Date("1975-03-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1969-12-01 00:00:00") }, { x: new Date("1970-11-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1960-04-01 00:00:00") }, { x: new Date("1961-02-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1957-08-01 00:00:00") }, { x: new Date("1958-04-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1954-07-01 00:00:00") }, { x: new Date("1954-05-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1948-11-01 00:00:00") }, { x: new Date("1949-10-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1945-02-01 00:00:00") }, { x: new Date("1945-10-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1937-05-01 00:00:00") }, { x: new Date("1938-06-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1926-10-01 00:00:00") }, { x: new Date("1927-11-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1923-05-01 00:00:00") }, { x: new Date("1924-06-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1920-01-01 00:00:00") }, { x: new Date("1921-06-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1918-08-01 00:00:00") }, { x: new Date("1919-03-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1913-01-01 00:00:00") }, { x: new Date("1914-12-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1910-01-01 00:00:00") }, { x: new Date("1912-01-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1907-05-01 00:00:00") }, { x: new Date("1908-06-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1902-09-01 00:00:00") }, { x: new Date("1904-08-01 00:00:00") }],
+    disable:['connector','note']
+  },
+  {
+    ...sharedMileAnnotationProps,
+    type: "bounds",
+    bounds: [{ x: new Date("1899-06-01 00:00:00") }, { x: new Date("1900-12-01 00:00:00") }],
+    disable:['connector','note']
+  }
+];
+
+var alcSharedProps = {
+  type: "xy"
+}
+
+const alcAnnotations = [
+  {
+    ...alcSharedProps,
+    label: "Non-Alcohol Related",
+    x:yearToDate(1987), y:13000,
+  },
+  {
+    ...alcSharedProps,
+    label: "Alcohol Related",
+    x:yearToDate(1987), y:34000,
   }
 ];
 
@@ -1355,7 +1496,6 @@ ReactDOM.render(
     hoverAnnotation={true}
     lineRenderMode={"normal"}
     lineType={{type:"line", interpolator: curveBasis}}
-
     lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
@@ -1424,6 +1564,7 @@ ReactDOM.render(
     xAccessor="x"
     yAccessor="y"
     hoverAnnotation={true}
+    annotations={alcAnnotations}
     lineRenderMode={"normal"}
     lineStyle={d => ({fill: d.color, fillOpacity: d.fillOpacity, strokeWidth: "2px" })}
     customLineType={{ type: "dividedLine"}}

@@ -12,13 +12,33 @@
       fill: #999;
     }
 
-    .annotation-note-label {
+    .annotation-note-label, .annotation-xy-label {
       font-size: 10px;
       fill: #666;
     }
 
+    circle {
+      opacity: 0;
+    }
+
     .tick-line {
       opacity: 0.4;
+    }
+
+    .recession .annotation-subject path {
+      fill-opacity: 0.15;
+      opacity: 1;
+      stroke-opacity: 0;
+      fill: rgb(150,150,150);
+    }
+
+
+    .note-line {
+      opacity: 0;
+    }
+
+    #deathMiles .tick-line {
+      opacity: 0;
     }
 
     #population .tick-line {
