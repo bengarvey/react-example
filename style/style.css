@@ -72,3 +72,25 @@ circle {
   top: 430px;
   left: 50px;
 }
+
+.legend {
+  font-size: 12px;
+}
+
+#deathLegend {
+  top: 92px;
+  left: 545px;
+  color: #393e41;
+}
+
+#popLegend {
+  top: 43px;
+  left: 545px;
+  color: #da4167;
+}
+
+#milesLegend {
+  top: 222px;
+  left: 545px;
+  color: #15b097;
+}

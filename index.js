@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { XYFrame } from 'semiotic';
+import { XYFrame, Legend } from 'semiotic';
 import { curveBasis } from 'd3-shape';
 import { scaleTime } from 'd3-scale';
 
@@ -1177,6 +1177,27 @@ var auto = [
    }
 ];
 
+const colors = {
+  deaths: '#393e41',
+  pop: '#da4167',
+  miles: '#15b097',
+  alc: '#fcde9c',
+  nonAlc: '#f4d35e',
+  annotationInfo: "#009ddc",
+  annotation: "#666666"
+}
+
+const deathLegend = [
+  {
+    type: "line",
+    styleFn: d => ({ stroke: d.color }),
+    items: [
+      { label: "US Auto Fatalities", color: colors.deaths },
+      { label: "US Population", color: colors.pop }
+    ]
+  }
+];
+
 var display = {
   data: auto
 };
@@ -1221,16 +1242,6 @@ auto.forEach( function(d) {
 
 function yearToDate(year) {
   return new Date(`${year}-01-01 00:00:00`);
-}
-
-var colors = {
-  deaths: '#393e41',
-  pop: '#da4167',
-  miles: '#15b097',
-  alc: '#fcde9c',
-  nonAlc: '#f4d35e',
-  annotationInfo: "#009ddc",
-  annotation: "#666666"
 }
 
 var deathDisplay = [
