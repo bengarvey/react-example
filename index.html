@@ -17,12 +17,22 @@
       fill: #666;
     }
 
+    .annotation-connector .connector {
+      stroke-dasharray: 3,1;
+      stroke-width: 1px;
+    }
+
     circle {
       opacity: 0;
     }
 
     .tick-line {
       opacity: 0.4;
+    }
+
+    .annotation-subject path {
+      stroke-dasharray: 3, 1;
+      stroke-width: 1px;
     }
 
     .recession .annotation-subject path {
@@ -32,9 +42,12 @@
       fill: rgb(150,150,150);
     }
 
-
     .note-line {
       opacity: 0;
+    }
+
+    .recession .note-line {
+      opacity: 1;
     }
 
     #deathMiles .tick-line {
@@ -54,15 +67,15 @@
     }
     #population, #deathPopulation {
       top: 10px;
-      left: 220px;
+      left: 50px;
     }
     #miles, #deathMiles {
       top: 220px;
-      left: 220px;
+      left: 50px;
     }
     #alcohol, #deathAlcohol {
       top: 430px;
-      left: 220px;
+      left: 50px;
     }
   </style>
 </head>

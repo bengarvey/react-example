@@ -1229,7 +1229,8 @@ var colors = {
   miles: '#15b097',
   alc: '#fcde9c',
   nonAlc: '#f4d35e',
-  annotation: "#009ddc"
+  annotationInfo: "#009ddc",
+  annotation: "#666666"
 }
 
 var deathDisplay = [
@@ -1272,7 +1273,7 @@ const popAnnotations = [
 
 var sharedMileAnnotationProps = {
   dx: -50,
-  dy: 150,
+  dy: 100,
   color: '#aaa',
   className: 'recession'
 }
@@ -1289,8 +1290,8 @@ var mileAnnotations = [
     type: "bounds",
     bounds: [{ x: new Date("1929-04-01 00:00:00") }, { x: new Date("1933-03-01 00:00:00") }],
     label: "Great Depression",
-    dy: 20,
-    dx: -30
+    dy: 30,
+    dx: -40
   },
   {
     ...sharedMileAnnotationProps,
