@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import { XYFrame } from 'semiotic';
 import { curveBasis } from 'd3-shape';
 import { scaleTime } from 'd3-scale';
-//import { AnnotationCalloutRect } from 'd3-svg-annotation';
-//import { AnnotationLabel } from 'd3-svg-annotation';
 
 var auto = [
    {
