@@ -11,7 +11,8 @@ const colors = {
   alc: '#fcde9c',
   nonAlc: '#f4d35e',
   annotationInfo: "#009ddc",
-  annotation: "#666666"
+  annotation: "#666666",
+  gasAdjusted: '#d86641'
 }
 
 const deathLegend = [
@@ -35,7 +36,9 @@ var modified = {
   alcohol: [],
   nonAlcohol: [],
   pop: [],
-  miles: []
+  miles: [],
+  gasRaw: [],
+  gasAdjusted: []
 };
 
 
@@ -67,10 +70,16 @@ auto.forEach( function(d) {
     {y: d.Population, x: yearToDate(d.Year), type: 'pop'});
   modified.miles.push(
     {y: d['Vehicle miles travelled (billions)'], x: yearToDate(d.Year), type: 'miles'});
-  totalDeaths += d.Deaths;
+  modified.gasRaw.push(
+    {y: d.gasPriceRaw, x: yearToDate(d.Year)}
+  );
+  modified.gasAdjusted.push(
+    {y: d.gasPriceAdjusted, x: yearToDate(d.Year)}
+  );
+ totalDeaths += d.Deaths;
 });
-
-console.log(totalDeaths);
+console.log(auto);
+console.log(modified.gasRaw);
 
 function yearToDate(year) {
   return new Date(`${year}-01-01 00:00:00`);
@@ -87,6 +96,11 @@ var popDisplay = [
 var milesDisplay = [
   {data: modified.miles, color: colors.miles}
 ];
+
+var gasDisplay = [
+  {data: modified.gasAdjusted, color: colors.gasAdjusted}
+];
+
 
 var alcDisplay = [
   {data: modified.nonAlcohol, color: colors.nonAlc, fillOpacity: 0.9},
@@ -115,8 +129,8 @@ const popAnnotations = [
 ];
 
 var sharedMileAnnotationProps = {
-  dx: -50,
-  dy: 100,
+  dx: 65,
+  dy: 150,
   color: '#aaa',
   className: 'recession'
 }
@@ -312,6 +326,7 @@ ReactDOM.render(
   <XYFrame
     { ...sharedProps }
     lines={deathDisplay}
+    size={[700,200]}
     defined={d => d.y !== null}
     lineDataAccessor="data"
     xAccessor="x"
@@ -320,6 +335,7 @@ ReactDOM.render(
     lineRenderMode={"normal"}
     lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
     customLineType={{ type: "dividedLine"}}
+    margin={{left: 10, bottom: 30, right: 210, top: 10}}
     axes={[
       { orient: 'bottom', ticks: 10, tickFormat: d => new Date(d).getFullYear()}
     ]}
@@ -352,6 +368,7 @@ ReactDOM.render(
 ReactDOM.render(
   <XYFrame
     { ...sharedProps }
+    size={[700,200]}
     lines={milesDisplay}
     defined={d => d.y !== null}
     lineDataAccessor="data"
@@ -363,12 +380,37 @@ ReactDOM.render(
     lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
     customLineType={{ type: "dividedLine"}}
     annotations={mileAnnotations}
+    margin={{left: 10, bottom: 30, right: 210, top: 10}}
     axes={[
       { orient: 'bottom', ticks: 10, tickFormat: d => '', stroke: '#FFFFFF' }
     ]}
 
   />,
   document.getElementById('miles')
+);
+
+console.log(gasDisplay);
+
+ReactDOM.render(
+  <XYFrame
+    { ...sharedProps }
+    size={[700,200]}
+    lines={gasDisplay}
+    defined={d => d.y !== null}
+    lineDataAccessor="data"
+    xAccessor="x"
+    yAccessor="y"
+    hoverAnnotation={true}
+    lineType={{type:"line", interpolator: curveBasis}}
+    lineRenderMode={"normal"}
+    lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
+    margin={{left: 10, bottom: 30, right: 210, top: 10}}
+    axes={[
+      { orient: 'bottom', ticks: 10, tickFormat: d => '', stroke: '#FFFFFF' }
+    ]}
+
+  />,
+  document.getElementById('gas')
 );
 
 ReactDOM.render(
@@ -393,7 +435,6 @@ ReactDOM.render(
   />,
   document.getElementById('deathAlcohol')
 );
-
 
 ReactDOM.render(
   <XYFrame

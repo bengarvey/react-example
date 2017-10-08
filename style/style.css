@@ -55,6 +55,10 @@ circle {
   opacity: 1;
 }
 
+#gas .tick-line {
+  opacity: 0;
+}
+
 #deathMiles .tick-line {
   opacity: 0;
 }
@@ -74,7 +78,7 @@ circle {
   top: 90px;
   left: 20px;
 }
-#miles, #deathMiles {
+#miles, #deathMiles, #gas {
   top: 300px;
   left: 20px;
 }
@@ -103,6 +107,12 @@ circle {
   top: 302px;
   left: 515px;
   color: #15b097;
+}
+
+#gasLegend {
+  top: 395px;
+  left: 515px;
+  color: #d86641;
 }
 
 #alcLegend {
