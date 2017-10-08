@@ -4,12 +4,12 @@ import { XYFrame, Mark } from 'semiotic';
 import { curveBasis } from 'd3-shape';
 import { scaleTime } from 'd3-scale';
 var libs = [
-  {name: "Semiotic",    speed: 0.75, flex: 0.75},
-  {name: "Vanilla JS",  speed: 0.0, flex: 1},
-  {name: "D3",          speed: 0.1, flex: 0.9},
-  {name: "chart.js",    speed: 0.75, flex: 0.4},
-  {name: "Highcharts",  speed: 0.85, flex: 0.3},
-  {name: "Plotly",      speed: 0.5, flex: 0.5}
+  {name: "Semiotic",    speed: 0.75, flex: 0.75, logo: "./img/semiotic.png"},
+  {name: "Vanilla JS",  speed: 0.00, flex: 1.00, logo: "./img/js.png"},
+  {name: "D3",          speed: 0.10, flex: 0.90, logo: "img/d3.png"},
+  {name: "chart.js",    speed: 0.75, flex: 0.40, logo: "img/chartjs.svg"},
+  {name: "Highcharts",  speed: 0.85, flex: 0.30, logo: "img/highcharts.png"},
+  {name: "Plotly",      speed: 0.50, flex: 0.50, logo: "img/plotly.png"}
 ];
 
 const colors = {
@@ -45,12 +45,11 @@ var modified = {
 
 libs.forEach( function(d) {
   modified.lib.push(
-    {x: d.flex, y:d.speed, name: d.name});
+    {x: d.flex, y:d.speed, name: d.name, logo: d.logo});
  });
 
-var display = [
-  {data: modified.lib, color: colors.lib, renderMode: "normal"}
-];
+var display =
+  {data: modified.lib, color: colors.lib, renderMode: "normal"};
 
 var sharedProps = {
   size: [600,600],
@@ -60,17 +59,26 @@ var sharedProps = {
   margin:{ left: 10, bottom: 30, right: 10, top: 10 }
 };
 
-console.log(display[0].data);
+console.log(JSON.stringify(display));
+
+var markProps = {
+  href:'img/js.png'
+};
 
 ReactDOM.render(
   <XYFrame
     { ...sharedProps }
-    //points={[{price: 1.25, size: 15}, {price: 2.25, size: 12}]}
-    points={display[0].data}
-    defined={d => d.price !== null}
-    pointDataAccessor={"data"}
-    customPointMark={ d => (<Mark markType="image" width="40px" href="img/magento.svg" style={{fill:"red"}} />) }
-    pointStyle={d => ({fill: '#333'})}
+    points={display.data}
+    pointStyle={ d => ({fill: "#666", r: '5px'})}
+    tooltipContent={d => d.name}
+    /*
+    customPointMark={
+      <Mark markType="image"
+            { ...markProps }
+            width="40px"
+      />
+    }
+    */
     axes={[
       { orient: 'bottom', ticks: 5, tickFormat: d => d},
       { orient: 'left', ticks: 5, tickFormat: d => d}
