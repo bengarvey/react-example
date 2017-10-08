@@ -78,8 +78,6 @@ auto.forEach( function(d) {
   );
  totalDeaths += d.Deaths;
 });
-console.log(auto);
-console.log(modified.gasRaw);
 
 function yearToDate(year) {
   return new Date(`${year}-01-01 00:00:00`);
@@ -388,8 +386,6 @@ ReactDOM.render(
   />,
   document.getElementById('miles')
 );
-
-console.log(gasDisplay);
 
 ReactDOM.render(
   <XYFrame
