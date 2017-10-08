@@ -52,7 +52,7 @@ function hideModernDeaths(deaths, alc, year) {
   return alc === null ? deaths : null;
 }
 
-console.log(auto);
+var totalDeaths = 0;
 
 auto.forEach( function(d) {
   modified.deaths.push(
@@ -67,7 +67,10 @@ auto.forEach( function(d) {
     {y: d.Population, x: yearToDate(d.Year), type: 'pop'});
   modified.miles.push(
     {y: d['Vehicle miles travelled (billions)'], x: yearToDate(d.Year), type: 'miles'});
+  totalDeaths += d.Deaths;
 });
+
+console.log(totalDeaths);
 
 function yearToDate(year) {
   return new Date(`${year}-01-01 00:00:00`);
@@ -403,7 +406,6 @@ ReactDOM.render(
     xAccessor="x"
     yAccessor="y"
     hoverAnnotation={true}
-    annotations={alcAnnotations}
     lineRenderMode={"normal"}
     lineStyle={d => ({fill: d.color, fillOpacity: d.fillOpacity, strokeWidth: "2px" })}
     customLineType={{ type: "dividedLine"}}

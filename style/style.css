@@ -7,6 +7,16 @@ text {
   fill: #999;
 }
 
+h1, h2, h3, h3, h3 {
+  margin: 0px 0 0 20px;
+}
+
+h3 {
+  font-weight: normal;
+  text-size: 16px;
+  color: #393e41;
+}
+
 .annotation-note-label, .annotation-xy-label {
   font-size: 10px;
   fill: #666;
@@ -61,16 +71,16 @@ circle {
   position: absolute;
 }
 #population, #deathPopulation {
-  top: 10px;
-  left: 50px;
+  top: 90px;
+  left: 20px;
 }
 #miles, #deathMiles {
-  top: 220px;
-  left: 50px;
+  top: 300px;
+  left: 20px;
 }
 #alcohol, #deathAlcohol {
-  top: 430px;
-  left: 50px;
+  top: 510px;
+  left: 20px;
 }
 
 .legend {
@@ -78,19 +88,59 @@ circle {
 }
 
 #deathLegend {
-  top: 92px;
-  left: 545px;
+  top: 172px;
+  left: 515px;
   color: #393e41;
 }
 
 #popLegend {
-  top: 43px;
-  left: 545px;
+  top: 123px;
+  left: 515px;
   color: #da4167;
 }
 
 #milesLegend {
-  top: 222px;
-  left: 545px;
+  top: 302px;
+  left: 515px;
   color: #15b097;
+}
+
+#alcLegend {
+  top: 585px;
+  left: 515px;
+  border-bottom: 4px solid #fadfa1;
+}
+
+#nonAlcLegend {
+  top: 635px;
+  left: 515px;
+  border-bottom: 4px solid #f3d569;
+}
+
+.description strong {
+  color: #222;
+}
+
+h1, h2, h3, .description {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+.description {
+  left: 700px;
+  width: 450px;
+  color: #666;
+  padding-left: 35px;
+  border-left: 1px solid #393e41;
+}
+
+.pop {
+  top: 100px;
+}
+
+.miles {
+  top: 270px;
+}
+
+.alc {
+  top: 500px;
 }
