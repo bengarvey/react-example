@@ -4,9 +4,9 @@ import { XYFrame, Mark } from 'semiotic';
 import { curveBasis } from 'd3-shape';
 import { scaleTime } from 'd3-scale';
 var libs = [
-  {name: "Semiotic",    speed: 0.75, flex: 0.75, logo: "./img/semiotic.png"},
-  {name: "Vanilla JS",  speed: 0.00, flex: 1.00, logo: "./img/js.png"},
-  {name: "D3",          speed: 0.10, flex: 0.90, logo: "img/d3.png"},
+  {name: "Semiotic",    speed: 0.65, flex: 0.65, logo: "img/semiotic.png"},
+  {name: "Vanilla JS",  speed: 0.10, flex: 0.90, logo: "img/js.png"},
+  {name: "D3",          speed: 0.20, flex: 0.80, logo: "img/d3.png"},
   {name: "chart.js",    speed: 0.75, flex: 0.40, logo: "img/chartjs.svg"},
   {name: "Highcharts",  speed: 0.85, flex: 0.30, logo: "img/highcharts.png"},
   {name: "Plotly",      speed: 0.50, flex: 0.50, logo: "img/plotly.png"}
@@ -68,17 +68,12 @@ var markProps = {
 ReactDOM.render(
   <XYFrame
     { ...sharedProps }
+    yExtent={[0,1]}
+    xExtent={[0,1]}
     points={display.data}
     pointStyle={ d => ({fill: "#666", r: '5px'})}
     tooltipContent={d => d.name}
-    /*
-    customPointMark={
-      <Mark markType="image"
-            { ...markProps }
-            width="40px"
-      />
-    }
-    */
+    customPointMark={ ({d}) => ( <Mark markType="image" height="40px" href={d.logo}/> ) }
     axes={[
       { orient: 'bottom', ticks: 5, tickFormat: d => d},
       { orient: 'left', ticks: 5, tickFormat: d => d}
