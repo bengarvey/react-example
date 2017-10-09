@@ -6,20 +6,15 @@ import { scaleTime } from 'd3-scale';
 
 const colors = {
   deaths: '#393e41',
-  pop: '#da4167',
 }
 
 var modified = {
   deaths: [],
-  pop: [],
 };
-
 
 auto.forEach( function(d) {
   modified.deaths.push(
     {y: d.Deaths, x: yearToDate(d.Year), type:'death'});
-  modified.pop.push(
-    {y: d.Population, x: yearToDate(d.Year), type: 'pop'});
 });
 
 function yearToDate(year) {
@@ -28,10 +23,6 @@ function yearToDate(year) {
 
 var deathDisplay = [
   {data: modified.deaths, color: colors.deaths, renderMode: "normal"}
-];
-
-var popDisplay = [
-  {data: modified.pop, color: colors.pop}
 ];
 
 const popAnnotations = [
@@ -74,6 +65,7 @@ ReactDOM.render(
     lineRenderMode={d => d.renderMode}
     lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
     customLineType={{ type: "dividedLine"}}
+    annotations={popAnnotations}
     axes={[
       { orient: 'bottom', ticks: 8, tickFormat: d => new Date(d).getFullYear() },
       { orient: 'left', ticks: 10, tickFormat: d => d.toLocaleString()}
@@ -82,25 +74,4 @@ ReactDOM.render(
   />,
   document.getElementById('deathPopulation')
 );
-ReactDOM.render(
-  <XYFrame
-    { ...sharedProps }
-    lines={popDisplay}
-    defined={d => d.y !== null}
-    lineDataAccessor="data"
-    xAccessor="x"
-    yAccessor="y"
-    hoverAnnotation={true}
-    lineRenderMode={"normal"}
-    lineType={{type:"line", interpolator: curveBasis}}
-    lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
-    customLineType={{ type: "dividedLine"}}
-    axes={[
-      { orient: 'bottom', ticks: 8, tickFormat: d => '' },
-      { orient: 'right', ticks: 10, tickFormat: d => d.toLocaleString()}
-    ]}
-    margin={{ left: 60, bottom: 30, right: 100, top: 40 }}
-    annotations={popAnnotations}
-  />,
-  document.getElementById('population')
-);
+
