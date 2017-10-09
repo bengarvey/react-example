@@ -61,24 +61,21 @@ var sharedProps = {
   yAccessor: "y",
   lineDataAccessor: "data",
   hoverAnnotation: true,
-  margin:{ left: 10, bottom: 30, right: 10, top: 10 }
+  lineType: {type:"line", interpolator: curveBasis},
+  defined: d => d.y !== null,
+  lineStyle: d => ({stroke: d.color, strokeWidth: "2px" }),
+  margin: { left: 60, bottom: 30, right: 100, top: 40 }
 };
 
 ReactDOM.render(
   <XYFrame
     { ...sharedProps }
     lines={deathDisplay}
-    defined={d => d.y !== null}
-    lineDataAccessor="data"
-    lineType={{type:"line", interpolator: curveBasis}}
-    lineRenderMode={d => d.renderMode}
     lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
-    customLineType={{ type: "dividedLine"}}
     axes={[
       { orient: 'bottom', ticks: 8, tickFormat: d => new Date(d).getFullYear() },
       { orient: 'left', ticks: 10, tickFormat: d => d.toLocaleString()}
     ]}
-    margin={{ left: 60, bottom: 30, right: 100, top: 40 }}
   />,
   document.getElementById('deathPopulation')
 );
@@ -86,20 +83,10 @@ ReactDOM.render(
   <XYFrame
     { ...sharedProps }
     lines={popDisplay}
-    defined={d => d.y !== null}
-    lineDataAccessor="data"
-    xAccessor="x"
-    yAccessor="y"
-    hoverAnnotation={true}
-    lineRenderMode={"normal"}
-    lineType={{type:"line", interpolator: curveBasis}}
-    lineStyle={d => ({stroke: d.color, strokeWidth: "2px" })}
-    customLineType={{ type: "dividedLine"}}
     axes={[
       { orient: 'bottom', ticks: 8, tickFormat: d => '' },
       { orient: 'right', ticks: 10, tickFormat: d => d.toLocaleString()}
     ]}
-    margin={{ left: 60, bottom: 30, right: 100, top: 40 }}
     annotations={popAnnotations}
   />,
   document.getElementById('population')
