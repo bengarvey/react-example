@@ -207,7 +207,7 @@ const colors = {
 
 ReactDOM.render(
   <NetworkFrame
-      size={[ 1300, 500 ]}
+      size={[ 800, 500 ]}
       edges={network.links}
       nodes={network.nodes}
       margin={60}
