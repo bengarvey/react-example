@@ -29,6 +29,14 @@ var network = {
     "deathDate": "1983-01-01T00:00:00.000Z",
     "side": "dark"
   }, {
+    "id": 8,
+    "name": "C3PO",
+    "gender": "M",
+    "lastName": "C3PO",
+    "birthDate": "1940-01-01T00:00:00.000Z",
+    "deathDate": "-01-01T00:00:00.000Z",
+    "side": "droid"
+  }, {
     "id": 3,
     "name": "Amidala, Padme",
     "gender": "F",
@@ -68,14 +76,6 @@ var network = {
     "birthDate": "1920-01-01T00:00:00.000Z",
     "deathDate": "1977-01-01T00:00:00.000Z",
     "side": "light"
-  }, {
-    "id": 8,
-    "name": "C3PO",
-    "gender": "M",
-    "lastName": "C3PO",
-    "birthDate": "1940-01-01T00:00:00.000Z",
-    "deathDate": "-01-01T00:00:00.000Z",
-    "side": "droid"
   }, {
     "id": 9,
     "name": "R2D2",
