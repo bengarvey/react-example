@@ -160,26 +160,46 @@ function getFloating(items, window, key) {
   return floating;
 }
 
-var floating = getFloating(deathsPerYear, 10, "deaths");
+var floating = getFloating(deathsPerYear, 7, "deaths");
 console.log([deathsPerYear, floating]);
-var display = {
-  data: [deathsPerYear, floating]
-};
+var display = [
+  {data: deathsPerYear, opacity: 0.35},
+  {data: floating, opacity: 1}
+];
+
+var annotations = [
+  { type: 'x', year: 1948,
+    note: { 
+      label: "First early warning system",
+      align: "left", wrap: 150
+    },
+    color: '#333', dy: 0, dx: 5, connector: { end: "none" }
+  }
+];
+
+console.log(yearToDate(1948));
+
+function yearToDate(year) {
+  return new Date(`${year}-01-01 00:00:00`);
+}
 
 ReactDOM.render(
   <XYFrame
     size={[800,400]}
     lines={display}
+    defined={d => d.y !== null}
     lineDataAccessor={d => d.data}
-    xAccessor={d => d.year}
+    xAccessor={d => yearToDate(d.year)}
     yAccessor={d => d.deaths}
     lineType={{type:"line", interpolator: curveBasis}}
-    lineStyle={() => ({ stroke: "#00a2ce", strokeWidth: "1px" })}
+    lineStyle={(d) => ({ stroke: "#00a2ce", strokeWidth: "1px", opacity: d.opacity})}
     customLineType={{ type: "dividedLine"}}
     axes={[
       { orient: 'left', tickFormat: d => d },
-      { orient: 'bottom', tickFormat: d => d }
+      { orient: 'bottom', ticks: 8, tickFormat: d => new Date(d).getFullYear() }
     ]}
+    margin={{top: 50, left: 50, right: 50, bottom: 50}}
+    annotations={annotations}
   />,
   document.getElementById('container')
 );
