@@ -148,8 +148,22 @@ var deathsPerYear = [
   {year: 2017,deaths: 38}
 ];
 
+function getFloating(items, window, key) {
+  var floating = [];
+  for(var i=window; i<items.length; i++) {
+    var value = 0; 
+    for(var j=window-1; j>=0; j--) {
+      value += items[i-j][key];
+    }
+    floating.push({year: items[i].year, deaths:value/window});
+  }
+  return floating;
+}
+
+var floating = getFloating(deathsPerYear, 10, "deaths");
+console.log([deathsPerYear, floating]);
 var display = {
-  data: deathsPerYear
+  data: [deathsPerYear, floating]
 };
 
 ReactDOM.render(
