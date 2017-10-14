@@ -31,7 +31,7 @@ ReactDOM.render(
     defined={d => d.y !== null}
     lineDataAccessor="data"
     lineType={{type:"line", interpolator: curveBasis}}
-    lineRenderMode={d => d.renderMode}
+    lineRenderMode={d => "normal"}
     lineStyle={d => ({stroke: '#393e41', strokeWidth: "2px" })}
     margin={{ left: 60, bottom: 30, right: 100, top: 40 }}
   />,
