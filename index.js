@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { XYFrame } from 'semiotic';
+import { curveBasis } from 'd3-shape';
 
 var deathsPerYear = [
   {year: 1876,deaths: 51},
@@ -158,6 +159,7 @@ ReactDOM.render(
     lineDataAccessor={d => d.data}
     xAccessor={d => d.year}
     yAccessor={d => d.deaths}
+    lineType={{type:"line", interpolator: curveBasis}}
     lineStyle={() => ({ stroke: "#00a2ce", strokeWidth: "1px" })}
     customLineType={{ type: "dividedLine"}}
     axes={[
