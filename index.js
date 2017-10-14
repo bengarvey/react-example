@@ -4,12 +4,14 @@ import { XYFrame, Legend } from 'semiotic';
 import { curveBasis } from 'd3-shape';
 
 var modified = {
-  deaths: [],
+  miles: [],
 };
 
+console.log(auto);
+
 auto.forEach( function(d) {
-  modified.deaths.push(
-    {y: d.Deaths, x: yearToDate(d.Year), type:'death'});
+  modified.miles.push(
+    {y: d['Vehicle miles travelled (billions)'], x: yearToDate(d.Year), type:'death'});
 });
 
 function yearToDate(year) {
@@ -17,7 +19,7 @@ function yearToDate(year) {
 }
 
 var deathDisplay = [
-  {data: modified.deaths}
+  {data: modified.miles}
 ];
 
 ReactDOM.render(
@@ -32,7 +34,7 @@ ReactDOM.render(
     lineDataAccessor="data"
     lineType={{type:"line", interpolator: curveBasis}}
     lineRenderMode={d => d.renderMode}
-    lineStyle={d => ({stroke: '#393e41', strokeWidth: "2px" })}
+    lineStyle={d => ({stroke: '#15b097', strokeWidth: "2px" })}
     margin={{ left: 60, bottom: 30, right: 100, top: 40 }}
   />,
   document.getElementById('deathPopulation')
