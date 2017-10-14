@@ -5,8 +5,9 @@ import { scaleLinear } from "d3-scale";
 
 
 const heatScale = scaleLinear()
-  .domain([0,2,4,8,16])
-  .range(["#dbd7ba", "#ED9797", "#7F5151", "#931313", "#230707"]).clamp(true);
+  .domain([0,5,10])
+  .range(["#fbf7da", "red", "darkred"]).clamp(true);
+  //.range(["#dbd7ba", "#ED9797", "#7F5151", "#931313", "#230707"]).clamp(true);
 
 const daysOfTheWeek = {
     1: "Monday",
