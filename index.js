@@ -38,17 +38,11 @@ var display =
   {data: modified.lib, color: colors.lib, renderMode: "normal"};
 
 var sharedProps = {
-  size: [700,700],
+  size: [700, 700],
   xAccessor: "x",
   yAccessor: "y",
   hoverAnnotation: true,
   margin:{ left: 10, bottom: 30, right: 10, top: 10 }
-};
-
-console.log(JSON.stringify(display));
-
-var markProps = {
-  href:'img/js.png'
 };
 
 ReactDOM.render(
@@ -61,10 +55,10 @@ ReactDOM.render(
     tooltipContent={d => d.name}
     customPointMark={ ({d}) => ( <Mark markType="image" transform="translate(-20,-20)" height="40px" href={d.logo}/> ) }
     axes={[
-      { orient: 'bottom', ticks: 5, tickFormat: d => d},
-      { orient: 'left', ticks: 5, tickFormat: d => d}
+      { orient: 'bottom', ticks: 5, tickFormat: d => d, label: "Flexibility"},
+      { orient: 'left', ticks: 5, tickFormat: d => d, label: "Speed"}
     ]}
-    margin={{ left: 50, bottom: 30, right: 10, top: 40 }}
+    margin={{ left: 70, bottom: 60, right: 10, top: 40 }}
   />,
   document.getElementById('libraries')
 );

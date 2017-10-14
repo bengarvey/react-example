@@ -4,7 +4,7 @@ body {
 }
 
 text {
-  fill: #999;
+  fill: #333;
 }
 
 h1, h2, h3, h3, h3 {
@@ -28,7 +28,7 @@ h3 {
 }
 
 .tick-line {
-  opacity: 0.4;
+  opacity: 0.8;
 }
 
 .annotation-subject path {
