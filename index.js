@@ -349,9 +349,15 @@ for(var i=window; i<lbs.length; i++) {
 }
 
 var display = [
-  {data: lbs, color: '#DDDDFF', strokeWidth: "1px"},
-  {data: floating, color: '#00a2ce', strokeWidth: "2px"}
+  {data: lbs, color: '#393e41', opacity: 0.35, strokeWidth: "1px"},
+  {data: floating, color: '#393e41', opacity: 1, strokeWidth: "2px"}
 ];
+
+var first = lbs[0].date;
+var last = lbs[lbs.length-1].date;
+
+var range = `${first} - ${last}`;
+document.getElementById('subTitle').innerHTML = `From ${range}`;
 
 ReactDOM.render(
   <XYFrame
@@ -363,8 +369,9 @@ ReactDOM.render(
     xAccessor={d => new Date(d.date)}
     yAccessor={d => d.lbs}
     hoverAnnotation={true}
-    lineStyle={(d) => ({ stroke: d.color, strokeWidth: d.strokeWidth })}
-    lineType={{ type: 'line', interpolator: curveBasis }}
+    lineType={{ type: 'line'}}
+    lineRenderMode={d => "sketchy"}
+    lineStyle={(d) => ({ stroke: d.color, strokeWidth: d.strokeWidth, opacity:d.opacity })}
     customLineType={{ type: "dividedLine"}}
     axes={[
       { orient: 'left', tickFormat: d => d },
